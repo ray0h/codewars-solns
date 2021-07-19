@@ -1,4 +1,5 @@
 // https://www.codewars.com/kata/574be65a974b95eaf40008da/train/javascript
+// fastest code to optimize:
 // https://www.codewars.com/kata/574e890e296e412a0400149c/train/javascript
 
 // Task
@@ -23,12 +24,6 @@
 
 // will not use eval()?
 function digitPerm(arr) {
-  // let poss = [
-  //   [a,b,c,d], [a,b,d,c], [a,c,b,d], [a,c,d,b], [a,d,b,c], [a,d,c,b],
-  //   [b,a,c,d], [b,a,d,c], [b,c,a,d], [b,c,d,a], [b,d,a,c], [b,d,c,a],
-  //   [c,a,b,d], [c,a,d,b], [c,b,a,d], [c,b,d,a], [c,d,a,b], [c,d,b,a],
-  //   [d,a,b,c], [d,a,c,b], [d,b,a,c], [d,b,c,a], [d,c,a,b], [d,c,b,a]
-  // ];
   let poss=[]
   arr.forEach((a, ai) => {
     arr.forEach((b, bi) => {
@@ -50,31 +45,6 @@ function digitPerm(arr) {
   return unique;
 };
 
-// faster permutation per stack overflow?
-// function digitPerm(arr) {
-//   var length = arr.length, 
-//     result = [arr.slice()];
-//     c = new Array(length).fill(0), 
-//     i = 1;
-//   var k, p;
-
-//   while (i < length) {
-//     if (c[i] < i) {
-//       k = i % 2 && c[i];
-//       p = arr[i];
-//       arr[i] = arr[k];
-//       arr[k] = p;
-//       ++c[i];
-//       i = 1;
-//       result.push(arr.slice());
-//     } else {
-//       c[i] = 0;
-//       ++i;
-//     }
-//   }
-//   return result;
-// }
-
 function operCombo() {
   const ops = ["/", "*", "-", "+"];
   let combos = [];
@@ -91,7 +61,6 @@ function operCombo() {
 const opers = operCombo();
 
 function equalTo24(a,b,c,d) {
-  // const ops = ['/', '*', '-', '+']
   let poss = digitPerm([a,b,c,d]);
 
   let ans = ""
@@ -99,8 +68,6 @@ function equalTo24(a,b,c,d) {
     if (ans) { break };
     for (ops of opers) {
       if (ans) { break };
-      // let expressions = [
-        // series[0] + ops[i] + series[1] + ops[j] + series[2] + ops[k] + series[3],
         str = '(' + series[0] + ops[0] + series[1] + ')' + ops[1] + '(' + series[2] + ops[2] + series[3] + ')'
         str2 = series[0] + ops[0] + '(' + series[1] + ops[1] + '(' + series[2] + ops[2] + series[3] + ')' + ')'
         str3 = '(' + '(' + series[0] + ops[0] + series[1] + ')' + ops[1] + series[2] + ')' + ops[2] + series[3]
@@ -111,27 +78,12 @@ function equalTo24(a,b,c,d) {
         } else if (eval(str3) == 24) {
           ans = str3;
         };
-        // series[0] + ops[i] + '(' + series[1] + ops[j] + series[2] + ')' + ops[k] + series[3],
-        // series[0] + ops[i] + '(' + series[1] + ops[j] + series[2] + ops[k] + series[3] + ')',
-        // series[0] + ops[i] + '(' + '(' + series[1] + ops[j] + series[2] + ')' + ops[k] + series[3] + ')',
-        // '(' + series[0] + ops[i] + series[1] + ops[j] + series[2] + ')' + ops[k] + series[3],
-        // '(' + series[0] + ops[0] + '(' + series[1] + ops[1] + series[2] + ')' + ')' + ops[2] + series[3]
-      // ];
-      // for (let x=0; x<3; x++) {
-      //   if (eval(expressions[x]) == 24) { 
-      //     ans = expressions[x];
-      //     x = 5;
-      //     break;
-      //   };
-      // };
     };
   };
   return ans ? ans : "It's not possible!"
 };
 
 console.time("benchmark");
-
-// console.log(equalTo24(13,13,13,13));
 
 console.log(equalTo24(1,2,3,4));
 console.log(equalTo24(2,3,4,5));
